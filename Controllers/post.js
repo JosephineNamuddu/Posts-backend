@@ -1,18 +1,20 @@
 const Post = require('../Models/post');
 
-const createPost = async (req, res) => {
-    const post = req.body;
+//create posts
+const CreatePost = async (req, res) => {
+    const PostData = req.body;
 
-    const newPost = new Post({...post, creator: req.userId, createdAt: new Date().toISOString()})
+    const newPost = new Post({...PostData, creator: req.userId, createdAt: new Date().toISOString()})
    
     try {
-        await newPost.save();
+        await newPost.save(); //saves post in the database
         res.status(201).json({message: 'Post created successfully', result: newPost});
 } catch (error) {
     res.status(500).json({message: 'Error while creating post', error: error.message});
         }
 }
 
+//fetch/read posts
 const getPosts = async (req, res) => {
 try {
     const posts = await Post.find();
@@ -21,7 +23,4 @@ try {
   res.status(500).json({message: 'Error while fetching posts', error: error.message});  
 }
 }
-module.exports = {
-    createPost,
-    getPosts
-}
+module.exports = {CreatePost,getPosts};

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
-//Bearere hbsfnkjnjknksjvnkj
+//Bearer hbsfnkjnjknksjvnkj
 // [Bearer, hbsfnkjnjknksjvnkj] after splitting
     try {
         const token = req.headers.authorization.split(" ")[1];

@@ -4,9 +4,10 @@ const { CreatePost, getPosts } = require('../Controllers/post');
 
 const auth = require('../Middlewares/auth');
 
-const router = express.Router();
+const router = require('express').Router();
 
 router.post('/', auth, CreatePost);
+
 router.get('/',getPosts);
 
 

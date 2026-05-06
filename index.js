@@ -21,7 +21,7 @@ app.use('/post',postRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`)
 })
 
