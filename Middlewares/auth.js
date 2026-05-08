@@ -4,7 +4,7 @@ const auth = (req, res, next) => {
 //Bearer hbsfnkjnjknksjvnkj
 // [Bearer, hbsfnkjnjknksjvnkj] after splitting
     try {
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.headers.authorization.split(" ")[1]; // code for getting a Token
     
         if (!token) {
         return res.status(401).json({message: 'Unauthorized access, token is missing'});
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
     let decodedData;
 
     decodedData = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decodedData.id,
+    req.userId = decodedData.id, //Attaching value to the Id.
 
     next();
     } catch (error) {

@@ -45,10 +45,10 @@ const register = async (req, res) => {
 //login function
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body;  // signingIn using an email and pwd
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email });   // checking for an existing user in the database
 
     if (!existingUser) {
       return res
@@ -57,16 +57,16 @@ const login = async (req, res) => {
     }
     const isPasswordCorrect = await bcrypt.compare(
       password,
-      existingUser.password
-    );
+      existingUser.password 
+    );  //compares password provided and the encrypted password using bycrpt package and it returns a boolean ie. true/False
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'The password is inncorect' });
     }
     const token = jwt.sign(
       { id: existingUser._id, email: existingUser.email },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-    );
+      { expiresIn: '1h' }, //This function includes the data you want to be in the Token, and the "secret" This makes the token secure. we also add the time of expiry. just to add a layer of security.
+    ); //if it is a correct pwd it continues to the token part. The token is used in authorization ie Middleware
     res
       .status(200)
       .json({
@@ -74,7 +74,7 @@ const login = async (req, res) => {
         result: { name: existingUser.name, email: existingUser.email },
         token,
       });
-
+       //This is how the auth Middleware is related to the users. 
   } catch (error) {
     res
       .status(500)
