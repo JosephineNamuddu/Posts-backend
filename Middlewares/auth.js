@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
 //Bearer hbsfnkjnjknksjvnkj
 // [Bearer, hbsfnkjnjknksjvnkj] after splitting
     try {
@@ -13,9 +13,10 @@ const auth = (req, res, next) => {
     let decodedData;
 
     decodedData = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decodedData.id, //Attaching value to the Id.
+    req.user = decodedData; //Attaching value to the Id.
 
     next();
+
     } catch (error) {
         res.status(401).json({ message:'Unauthorised access, invalid token', error: error.message});
     }

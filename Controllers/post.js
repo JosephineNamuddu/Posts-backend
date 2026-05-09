@@ -4,7 +4,7 @@ const Post = require('../Models/post');
 const CreatePost = async (req, res) => {
     const PostData = req.body;
 
-    const newPost = new Post({...PostData, creator: req.userId, createdAt: new Date().toISOString()})
+    const newPost = new Post({...PostData, creator: req.user._id, createdAt: new Date().toISOString()})
    
     try {
         await newPost.save(); //saves post in the database
@@ -54,10 +54,10 @@ const patchPost = async (req, res) => {
     try {
         const existingPost = await Post.findById(id); //fetching the post
         if (!existingPost) {
-            return res.status(400).json({ message: 'Post not found' });   
+            return res.status(404).json({ message: 'Post not found' });   
         }
-         if (req.userId !== existingPost.creator){
-            return res.status(400).json({message: 'Unauthorised access, you are not the owner of this post'});
+         if (req.user._id.toString()!== existingPost.creator.toString()){
+            return res.status(403).json({message: 'Unauthorised access, you are not the owner of this post'});
          }
          if (title) existingPost.title = title;
          if (content) existingPost.content = content;

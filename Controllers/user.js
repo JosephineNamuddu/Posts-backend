@@ -27,7 +27,7 @@ const register = async (req, res) => {
 
     await newUser.save();
     const token = jwt.sign(
-      { id: newUser._id, email: newUser.email },
+      { _id: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
@@ -63,7 +63,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'The password is inncorect' });
     }
     const token = jwt.sign(
-      { id: existingUser._id, email: existingUser.email },
+      { _id: existingUser._id, email: existingUser.email },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }, //This function includes the data you want to be in the Token, and the "secret" This makes the token secure. we also add the time of expiry. just to add a layer of security.
     ); //if it is a correct pwd it continues to the token part. The token is used in authorization ie Middleware
