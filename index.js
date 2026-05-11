@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 
 const connectDB = require('./db')
 
@@ -12,14 +13,16 @@ const app = express();
 app.use(express.json());
 
 //Middlewares to handle CORS
-// const corsOptions = {
-//   origin: '*',
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   credentials: true,
-// };
+ const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+   allowedHeaders: ['Content-Type', 'Authorization'],
+   credentials: true,
+ };
 
-// app.use(cors(corsOptions));
+ app.use(cors(corsOptions));
+
+ 
 
 app.get('/', (req,res)=>{
     res.send('welcome to the Posts API!');
